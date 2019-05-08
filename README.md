@@ -1,5 +1,5 @@
 # N-Body-Simulator
-This repository contains the code for an OpenMP based n-body simulator.
+This repository contains the code for an OpenMP based simulator for the n-body problem.
 
 ## Running the simulator
 ```
