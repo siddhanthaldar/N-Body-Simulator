@@ -8,14 +8,14 @@
 
 using namespace std;
 
-int num_bodies = 1000;
+int num_bodies = 4;
 
 #define n_threads 8
 #define length 100
 #define width 200
 #define depth 400
-#define time_steps 720000
-float delta_t = 0.01;
+#define time_steps 5000
+float delta_t = 0.1;
 
 // Position is [width,length,depth]
 
@@ -35,7 +35,7 @@ float** initial_location()
 	f.open("Trajectory.txt");
 
 	// Ignore first 8 lines
-	#pragma omp parallel for private(i) shared(f)
+	// #pragma omp parallel for private(i) shared(f)
 	for(int i=0; i<8; i++)
 	{
 		f.ignore(1000,'\n');
@@ -200,7 +200,7 @@ void simulate(float** initial_loc)
 				v[j][k] += F[j][k]*delta_t/2;  // mass = 1
 
 			// Update particle position
-			// #pragma omp parallel for shared(pos,j,i,delta_t) private(k)
+			#pragma omp parallel for shared(pos,j,i,delta_t) private(k)
 			for(k=0;k<3;k++)
 				pos[j][i][k] = pos[j][i-1][k] + v[j][k]*delta_t;
 			
